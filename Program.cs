@@ -10,18 +10,15 @@ namespace imagesharp_textmeasure {
     class Program {
         static void Main(string[] args) {
             var squareSize = 512;
+            var backgroundColor = Rgba32.Salmon;
+            var font = SystemFonts.CreateFont("Arial", 300);
+            var text = "KS";
+            
+            var textSize = TextMeasurer.Measure(text, new RendererOptions(font, 72));
+            Console.WriteLine($"Measured size: {textSize.Width}, {textSize.Height}, Text: {text}");
+
             using(var img = new Image<Rgba32>(squareSize, squareSize)) {
-                var backgroundColor = Rgba32.Salmon;
-
-                var font = SystemFonts.CreateFont("Arial", 300);
-                var text = "KS";
-
-                var textSize = TextMeasurer.Measure(text, new RendererOptions(font, 72));
-
-                Console.WriteLine($"Measured size: {textSize.Width}, {textSize.Height}, Text: {text}");
-
                 var textGraphicsOptions = new TextGraphicsOptions(true);
-
                 var textPosition = new PointF(squareSize / 2f - textSize.Width / 2, squareSize / 2f - textSize.Height / 2f);
                 img.Mutate(ctx => ctx
                     .Fill(backgroundColor)
